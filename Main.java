@@ -1,6 +1,7 @@
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
+import java.lang.Math;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -13,6 +14,9 @@ public class Main {
 
         String[] playerName = {"", ""};
         String[] roles =  {"Knight", "Samurai", "Wizard", "Thief"};
+
+        int turnCounter = 0;
+
         int role = 0;
 
         Scanner scan = new Scanner(System.in);
@@ -67,7 +71,7 @@ public class Main {
                 }
             } while(checkFailed);
 
-
+            System.out.println(role);
 
             if (role == 0) {role = rand.nextInt(3) + 1;}
 
@@ -75,7 +79,9 @@ public class Main {
             else  { player2.setPlayerInfo(playerName[j], roles[role - 1]); }
 
             scan.nextLine();
+            role = 0;
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
         }
 
         System.out.println("BEGIN BATTLE!");
@@ -84,11 +90,26 @@ public class Main {
         do
         {
             // PLAYERS CHOOSE ATTACK
+            turnCounter++;
+            System.out.println("\nRound " + turnCounter +"!\n");
+
+            player1.newTurn();
+            player1.chooseAttack();
+            player2.newTurn();
+            player2.chooseAttack();
 
             if (player1.getSpeed() > player2.getSpeed()){
-                System.out.println("It is " + player1.getPlayerName() + "'s turn.\n");
-
+                player1.attack(player2);
+                player2.attack(player1);
             }
+            else {
+                player2.attack(player1);
+                player1.attack(player2);
+            }
+
+            //ATTACK SEQUENCE
+
+
         } while (player1.isAlive() && player2.isAlive());
     }
 }
