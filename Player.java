@@ -2,11 +2,12 @@ import java.util.Scanner;
 import java.lang.Math;
 
 public class Player {
-    private int hp = 0;  //Health pool
+    private int maxhp = 0;  //Health pool
     private int defaultsp = 0;  //Stamina pool
     private int defaultdp = 0;  //Defense pool (Damage mitigated on hit)
     private int defaultSpeed = 0;
 
+    private int hp = 0;
     private int sp = 0;
     private int dp = 0;
     private int speed = 0;
@@ -64,6 +65,7 @@ public class Player {
                 break;
         }
 
+        maxhp = hp + 20;
         sp = defaultsp;
         dp = defaultdp;
         speed = defaultSpeed;
@@ -166,7 +168,7 @@ public class Player {
     }
 
     public void changeStats(int hp, int sp, int dp, int speed, boolean bleed, boolean negateBleed, String spellType, int dmgBuff){
-        this.hp += hp;
+        this.hp += (hp - (hp / this.dp));
         this.sp += sp;
         this.dp += dp;
         this.speed += speed;
@@ -189,7 +191,10 @@ public class Player {
         }
         else if (hp > 0)
         {
-            System.out.println(name + " replenished " + hp + "hp. (" + this.hp + "hp left)");
+            if (this.hp > this.maxhp)
+                this.hp = this.maxhp;
+            else
+                System.out.println(name + " replenished " + hp + "hp. (" + this.hp + "hp left)");
         }
 
         if (sp > 0) { System.out.println(name + " replenished " + sp + " stamina. (" + this.sp + "sp left)"); }

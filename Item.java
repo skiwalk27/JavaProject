@@ -93,7 +93,7 @@ public class Item{
                     case 1:
                         this.itemName = "Staff";
                         this.damage = 20;
-                        this.staminaIncrease = 10;
+                        this.staminaIncrease = 20;
                         break;
                     case 2:
                         this.itemName = "Protection Spell";
@@ -103,12 +103,14 @@ public class Item{
                         break;
                     case 3:
                         this.itemName = "Spell book";
-                        this.procChance = 50;
+                        this.procChance = 100;
                         this.staminaUse = 30;
                         break;
                     case 4:
                         this.itemName = "Life steal";
-                        this.speedincrease = 30;
+                        this.procChance = 60;
+                        this.damage = 20;
+                        this.heal = 40;
                         this.staminaUse = 50;
                         break;
                 }
@@ -219,6 +221,10 @@ public class Item{
                 System.out.println(itemName + " inflicted Bleed!");
                 bleed = true;
             }
+        }
+
+        if (itemName.equals("Disarm")){
+            receiver.setAttackMissed(true);
         }
 
         if (selfDamage > 0) {userDamage = selfDamage;}
